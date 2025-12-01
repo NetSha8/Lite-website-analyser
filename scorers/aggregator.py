@@ -10,6 +10,8 @@ from .ssl_checker import SSLScorer
 from .url_analyzer import URLAnalyzerScorer
 from .content_analyzer import ContentAnalyzerScorer
 from .dns_analyzer import DNSAnalyzerScorer
+from .dropshipping_analyzer import DropshippingAnalyzer
+from .reputation_scorer import ReputationScorer
 from cache import analysis_cache
 
 
@@ -57,11 +59,13 @@ class LegitimacyScorer:
         # Initialize all scorers with their weights
         # Higher weight = more importance in final score
         self.scorers: list[BaseScorer] = [
-            DomainAgeScorer(weight=1.5),      # Domain age is important
-            SSLScorer(weight=1.5),             # SSL is crucial
-            URLAnalyzerScorer(weight=1.2),     # URL patterns matter
-            ContentAnalyzerScorer(weight=1.3), # Content analysis is key
-            DNSAnalyzerScorer(weight=1.0),     # DNS info is supporting
+            DomainAgeScorer(weight=2.0),       # Domain age is very important
+            SSLScorer(weight=0.5),             # SSL is common now, less critical
+            URLAnalyzerScorer(weight=1.0),     # URL patterns matter
+            ContentAnalyzerScorer(weight=1.8), # Content analysis is key
+            DNSAnalyzerScorer(weight=0.8),     # DNS info is supporting
+            DropshippingAnalyzer(weight=1.5),  # Dropshipping detection
+            ReputationScorer(weight=2.5),      # Trustpilot reputation (high weight)
         ]
     
     def _calculate_risk_level(self, score: float) -> str:

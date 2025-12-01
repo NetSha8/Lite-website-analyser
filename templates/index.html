@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         // Initialize Alpine on HTMX content swap
-        document.addEventListener('htmx:afterSwap', function() {
+        document.addEventListener('htmx:afterSwap', function () {
             if (window.Alpine) {
                 Alpine.initTree(document.body);
             }
@@ -17,54 +18,69 @@
     </script>
     <style>
         .htmx-request .loading {
-            display: inline-block;
+            display: inline-block !important;
         }
+
         .htmx-request .ready {
-            display: none;
+            display: none !important;
         }
+
         .loading {
-            display: none;
+            display: none !important;
         }
+
         @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(1.3); opacity: 0; }
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
         }
+
         .animate-pulse-ring {
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
     </style>
 </head>
-<body class="h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+
+<body class="h-full bg-slate-950 text-slate-200">
     <div class="min-h-full">
         <!-- Header -->
-        <header class="bg-black/20 backdrop-blur-sm border-b border-white/10">
+        <header class="bg-slate-950 border-b border-slate-800">
             <div class="max-w-7xl mx-auto px-4 py-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="relative">
-                            <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-white">{{ t.app_name }}</h1>
+                            <h1 class="text-2xl font-bold text-white tracking-tight">{{ t.app_name }}</h1>
                             <p class="text-sm text-slate-400">{{ t.app_tagline }}</p>
                         </div>
                     </div>
-                    
+
                     <!-- Language Switcher -->
                     <div class="relative">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                             </svg>
-                            <select 
-                                onchange="window.location.href='/?lang=' + this.value"
-                                class="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 cursor-pointer">
-                                <option value="en" {% if lang == 'en' %}selected{% endif %} class="bg-slate-800">{{ t.lang_en }}</option>
-                                <option value="fr" {% if lang == 'fr' %}selected{% endif %} class="bg-slate-800">{{ t.lang_fr }}</option>
+                            <select onchange="window.location.href='/?lang=' + this.value"
+                                class="bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer hover:border-slate-700 transition-colors">
+                                <option value="en" {% if lang=='en' %}selected{% endif %} class="bg-slate-900">{{
+                                    t.lang_en }}</option>
+                                <option value="fr" {% if lang=='fr' %}selected{% endif %} class="bg-slate-900">{{
+                                    t.lang_fr }}</option>
                             </select>
                         </div>
                     </div>
@@ -75,39 +91,38 @@
         <!-- Main Content -->
         <main class="max-w-4xl mx-auto px-4 py-12">
             <!-- Search Form -->
-            <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mb-8">
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 p-8 mb-8 shadow-xl shadow-black/20">
                 <h2 class="text-xl font-semibold text-white mb-2">{{ t.analyze_title }}</h2>
                 <p class="text-slate-400 mb-6">{{ t.analyze_description }}</p>
-                
-                <form hx-post="/api/analyze?lang={{ lang }}" 
-                      hx-target="#results" 
-                      hx-indicator="#submit-btn"
-                      class="flex gap-4">
+
+                <form hx-post="/api/analyze?lang={{ lang }}" hx-target="#results" hx-indicator="#submit-btn"
+                    class="flex gap-4">
                     <div class="flex-1 relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                             </svg>
                         </div>
-                        <input type="text" 
-                               name="url" 
-                               placeholder="{{ t.url_placeholder }}" 
-                               required
-                               class="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all">
+                        <input type="text" name="url" placeholder="{{ t.url_placeholder }}" required
+                            class="w-full pl-12 pr-4 py-4 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
                     </div>
-                    <button type="submit" 
-                            id="submit-btn"
-                            class="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-semibold rounded-xl transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                    <button type="submit" id="submit-btn"
+                        class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/20">
                         <span class="ready flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                             {{ t.analyze_button }}
                         </span>
                         <span class="loading flex items-center gap-2">
                             <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
                             </svg>
                             {{ t.analyzing_button }}
                         </span>
@@ -122,30 +137,36 @@
 
             <!-- Features -->
             <div class="grid md:grid-cols-3 gap-6 mt-12">
-                <div class="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
-                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <div
+                    class="bg-slate-900 rounded-xl border border-slate-800 p-6 hover:border-slate-700 transition-colors">
+                    <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">{{ t.feature_domain_age_title }}</h3>
                     <p class="text-slate-400 text-sm">{{ t.feature_domain_age_desc }}</p>
                 </div>
-                
-                <div class="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
-                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+
+                <div
+                    class="bg-slate-900 rounded-xl border border-slate-800 p-6 hover:border-slate-700 transition-colors">
+                    <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">{{ t.feature_ssl_title }}</h3>
                     <p class="text-slate-400 text-sm">{{ t.feature_ssl_desc }}</p>
                 </div>
-                
-                <div class="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+
+                <div
+                    class="bg-slate-900 rounded-xl border border-slate-800 p-6 hover:border-slate-700 transition-colors">
+                    <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">{{ t.feature_content_title }}</h3>
@@ -155,7 +176,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="border-t border-white/10 mt-auto">
+        <footer class="border-t border-slate-800 mt-auto bg-slate-950">
             <div class="max-w-7xl mx-auto px-4 py-6">
                 <p class="text-center text-slate-500 text-sm">
                     {{ t.footer_text }}
@@ -164,4 +185,5 @@
         </footer>
     </div>
 </body>
+
 </html>

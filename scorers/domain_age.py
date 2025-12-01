@@ -111,11 +111,60 @@ class DomainAgeScorer(BaseScorer):
                 creation_date = whois_data.get('creation_date')
                 expiration_date = whois_data.get('expiration_date')
                 registrar = whois_data.get('registrar')
+                org = whois_data.get('org')
+                name = whois_data.get('name')
+                address = whois_data.get('address')
             else:
                 domain_name = getattr(whois_data, 'domain_name', None)
                 creation_date = getattr(whois_data, 'creation_date', None)
                 expiration_date = getattr(whois_data, 'expiration_date', None)
                 registrar = getattr(whois_data, 'registrar', None)
+                org = getattr(whois_data, 'org', None)
+                name = getattr(whois_data, 'name', None)
+                address = getattr(whois_data, 'address', None)
+            
+            # Check for WHOIS privacy services
+            privacy_services = [
+                "Domains By Proxy",
+                "WhoisGuard",
+                "Privacy Protect",
+                "Contact Privacy",
+                "Withheld for Privacy",
+                "Private by Design",
+                "Identity Protection",
+                "Whois Privacy",
+                "Registration Private",
+                "Perfect Privacy",
+                "Proxy Protection",
+                "Privacy Hero",
+            ]
+            
+            has_privacy = False
+            privacy_service = None
+            
+            # Helper to check fields
+            def check_privacy(value):
+                if not value:
+                    return None
+                if isinstance(value, list):
+                    value = " ".join(str(v) for v in value)
+                value = str(value).lower()
+                for service in privacy_services:
+                    if service.lower() in value:
+                        return service
+                return None
+
+            # Check common fields for privacy indicators
+            for field in [org, name, address]:
+                found = check_privacy(field)
+                if found:
+                    has_privacy = True
+                    privacy_service = found
+                    break
+            
+            if has_privacy:
+                details["privacy_service"] = privacy_service
+                warnings.append(f"Domain uses WHOIS privacy service: {privacy_service}")
             
             if whois_data is None or domain_name is None:
                 return self._create_result(
@@ -164,8 +213,16 @@ class DomainAgeScorer(BaseScorer):
             # Additional warnings
             if age_days < 30:
                 warnings.append("Domain was created very recently (less than 30 days)")
+                if has_privacy:
+                    score = max(0, score - 10)
+                    warnings.append("New domain using privacy protection (suspicious)")
             elif age_days < 180:
                 warnings.append("Domain is relatively new (less than 6 months)")
+                if has_privacy:
+                    score = max(0, score - 5)
+            elif age_days < 365 and has_privacy:
+                # Slight penalty for privacy on domains < 1 year
+                score = max(0, score - 2)
             
             # Check expiration date
             exp_date = expiration_date

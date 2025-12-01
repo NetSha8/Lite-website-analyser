@@ -164,14 +164,14 @@ async def analyze_for_ui(request: Request, url: str = Form(...), lang: str | Non
         error_title = translations.get("error_title", "Validation Error")
         error_message = sanitize_for_html(str(e))
         error_html = f'''
-        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
+        <div class="bg-slate-900 border border-yellow-500/50 rounded-xl p-6 shadow-lg">
             <div class="flex items-center gap-3">
-                <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
                 <div>
-                    <h3 class="text-yellow-400 font-semibold">{error_title}</h3>
-                    <p class="text-yellow-300/80 text-sm mt-1">{error_message}</p>
+                    <h3 class="text-yellow-500 font-semibold">{error_title}</h3>
+                    <p class="text-slate-300 text-sm mt-1">{error_message}</p>
                 </div>
             </div>
         </div>
@@ -195,14 +195,14 @@ async def analyze_for_ui(request: Request, url: str = Form(...), lang: str | Non
         # Sanitize error message to prevent XSS
         error_message = sanitize_for_html(str(e))
         error_html = f'''
-        <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+        <div class="bg-slate-900 border border-red-500/50 rounded-xl p-6 shadow-lg">
             <div class="flex items-center gap-3">
-                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <div>
-                    <h3 class="text-red-400 font-semibold">{error_title}</h3>
-                    <p class="text-red-300/80 text-sm mt-1">{error_message}</p>
+                    <h3 class="text-red-500 font-semibold">{error_title}</h3>
+                    <p class="text-slate-300 text-sm mt-1">{error_message}</p>
                 </div>
             </div>
         </div>

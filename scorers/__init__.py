@@ -5,6 +5,8 @@ from .ssl_checker import SSLScorer
 from .url_analyzer import URLAnalyzerScorer
 from .content_analyzer import ContentAnalyzerScorer
 from .dns_analyzer import DNSAnalyzerScorer
+from .dropshipping_analyzer import DropshippingAnalyzer
+from .reputation_scorer import ReputationScorer
 from .aggregator import LegitimacyScorer
 
 __all__ = [
@@ -13,5 +15,7 @@ __all__ = [
     "URLAnalyzerScorer",
     "ContentAnalyzerScorer",
     "DNSAnalyzerScorer",
+    "DropshippingAnalyzer",
+    "ReputationScorer",
     "LegitimacyScorer",
 ]

@@ -46,7 +46,7 @@ async def get_http_client() -> httpx.AsyncClient:
             headers=DEFAULT_HEADERS,
             follow_redirects=True,
             verify=False,  # Allow self-signed certs for analysis
-            http2=True,    # Enable HTTP/2 for better performance
+            http2=False,    # Disable HTTP/2 to avoid dependency issues
         )
     
     return _http_client
