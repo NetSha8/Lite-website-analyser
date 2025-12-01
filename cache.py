@@ -152,14 +152,14 @@ class TTLCache(Generic[T]):
 
 
 # Global cache instances
-# Cache for full analysis results (5 minutes TTL)
-analysis_cache: TTLCache[dict[str, Any]] = TTLCache(max_size=500, default_ttl=300)
+# Cache for full analysis results (30 minutes TTL - Vercel optimization)
+analysis_cache: TTLCache[dict[str, Any]] = TTLCache(max_size=1000, default_ttl=1800)
 
-# Cache for WHOIS data (1 hour TTL - WHOIS data changes rarely)
-whois_cache: TTLCache[dict[str, Any]] = TTLCache(max_size=1000, default_ttl=3600)
+# Cache for WHOIS data (24 hours TTL - WHOIS data changes rarely)
+whois_cache: TTLCache[dict[str, Any]] = TTLCache(max_size=2000, default_ttl=86400)
 
-# Cache for DNS lookups (5 minutes TTL)
-dns_cache: TTLCache[list[str]] = TTLCache(max_size=1000, default_ttl=300)
+# Cache for DNS lookups (1 hour TTL - DNS changes rarely)
+dns_cache: TTLCache[list[str]] = TTLCache(max_size=2000, default_ttl=3600)
 
 
 async def get_cached_or_compute(

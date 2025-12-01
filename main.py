@@ -49,8 +49,8 @@ app = FastAPI(
 # Add security middleware
 app.add_middleware(SecurityHeadersMiddleware)
 
-# Add rate limiting (30 req/min, 200 req/hour)
-rate_limiter = RateLimiter(requests_per_minute=30, requests_per_hour=200)
+# Add rate limiting (10 req/min, 50 req/hour for Vercel optimization)
+rate_limiter = RateLimiter(requests_per_minute=10, requests_per_hour=50)
 app.add_middleware(RateLimitMiddleware, rate_limiter=rate_limiter)
 
 # Initialize the scorer
